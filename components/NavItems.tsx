@@ -1,14 +1,68 @@
-import { Link } from "react-router"
+import { cn } from "~/lib/utils";
+import { Link, NavLink } from "react-router";
+import { sidebarItems } from "~/constants";
 
-const NavItems = () => {
+const NavItems = ({ handleClick }: { handleClick: () => void }) => {
+  const user = {
+    name: "John Doe",
+    email: "johndoe@gmail.com",
+    imageUrl: "/assets/images/david.webp",
+  };
+
   return (
     <section className="nav-items">
-        <Link to="/" className="link-logo">
-            <img src="/assets/icons/logo.svg" alt="logo" className="size-[30-x]" />
-            <h1>Fly Woldreamz</h1>
-        </Link>
-    </section>
-  )
-}
+      <Link to="/" className="link-logo">
+        <img src="/assets/icons/logo.svg" alt="logo" className="size-[30-x]" />
+        <h1>Fly Woldreamz</h1>
+      </Link>
 
-export default NavItems
+      <div className="container">
+        <nav>
+          {sidebarItems.map(({ id, icon, label, href }) => (
+            <NavLink to={href} key={id}>
+              {({ isActive }: { isActive: boolean }) => (
+                <div
+                  className={cn("group nav-item", {
+                    "bg-primary-100 !text-white": isActive,
+                  })}
+                  onClick={handleClick}
+                >
+                  <img
+                    src={icon}
+                    alt={label}
+                    className={`group-hover:brightness-0 size-0 group-hover:invert ${
+                      isActive ? "brightness-0 invert" : ""
+                    }`}
+                  />
+                  {label}
+                </div>
+              )}
+            </NavLink>
+          ))}
+        </nav>
+
+        <footer className="nav-footer">
+          <img
+            src={user?.imageUrl || "/assets/images/david.webp"}
+            alt={user?.name || "David"}
+          />
+
+          <article>
+            <h2>{user?.name}</h2>
+            <p>{user?.email}</p>
+          </article>
+
+          <button
+            onClick={() => {
+              console.log("logout");
+            }}
+          >
+            <img src="/assets/icons/logout.svg" alt="logout" className="size-6" />
+          </button>
+        </footer>
+      </div>
+    </section>
+  );
+};
+
+export default NavItems;
