@@ -10,9 +10,9 @@ export const appwriteConfig = {
     tripCollectionId: import.meta.env.VITE_APPWRITE_TRIP_COLLECTION_ID,
 }
 
-const client = new Client();
+const client = new Client()
     .setEndpoint(appwriteConfig.endpointUrl)
-    .setProject(appwriteConfig.projectId)
+    .setProject(appwriteConfig.projectId);
     
 
 const account = new Account(client);
